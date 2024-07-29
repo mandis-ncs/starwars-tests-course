@@ -1,6 +1,7 @@
 package com.test_api_course.starwars.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
@@ -10,8 +11,17 @@ public class Planet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotEmpty
+    @Column(nullable = false, unique = true)
     private String name;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String climate;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String terrain;
 
     public Planet() {
@@ -71,6 +81,16 @@ public class Planet {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, climate, terrain);
+    }
+
+    @Override
+    public String toString() {
+        return "Planet{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", climate='" + climate + '\'' +
+                ", terrain='" + terrain + '\'' +
+                '}';
     }
 }
 
