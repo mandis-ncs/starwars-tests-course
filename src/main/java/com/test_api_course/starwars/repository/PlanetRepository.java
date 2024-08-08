@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface PlanetRepository extends CrudRepository<Planet, Long>, QueryByExampleExecutor<Planet> {
     Optional<Planet> findByName(String name);
 
-    //return a planet list
+    //receive a query builder and return a planet list
     @Override
     <S extends Planet> List<S> findAll(Example<S> example);
 }
