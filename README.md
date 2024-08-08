@@ -100,3 +100,24 @@ O Jacoco é utilizado para gerar relatórios de cobertura de código. Isso ajuda
 
 Pitest - Testes de Mutação
 O Pitest é usado para avaliar a qualidade dos seus testes. Ele introduz mutações no código e verifica se os testes conseguem detectar essas alterações. Se os testes falharem ao detectar uma mutação, isso pode indicar que os testes não estão cobrindo todas as situações possíveis.
+
+```
+<plugin>
+    <groupId>org.pitest</groupId>
+    <artifactId>pitest-maven</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>org.pitest</groupId>
+            <artifactId>pitest-junit5-plugin</artifactId>
+        </dependency>
+    </dependencies>
+    <configuration>
+        <targetTests>
+            <param><!-- Adicione os padrões dos testes que deseja incluir --></param>
+        </targetTests>
+        <excludedClasses>
+            <param><!-- Adicione as classes que deseja excluir da mutação --></param>
+        </excludedClasses>
+    </configuration>
+</plugin>
+```
