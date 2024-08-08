@@ -4,6 +4,9 @@ import com.test_api_course.starwars.domain.Planet;
 import com.test_api_course.starwars.domain.QueryBuilder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -13,6 +16,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static com.test_api_course.starwars.common.PlanetConstants.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -49,13 +53,24 @@ class PlanetRepositoryIntegrationTest {
         assertThat(sut.getTerrain()).isEqualTo(PLANET.getTerrain());
     }
 
-    @Test
-    void createPlanetInvalid() {
+    @ParameterizedTest
+    @MethodSource("providesInvalidPlanets")
+    void createPlanetInvalid(Planet planet) {
         //constraints on database assure that invalid data will not be saved
         //with the test pass, is incorrect, as constraints are not functioning
 
-        assertThatThrownBy(() -> planetRepository.save(EMPTY_PLANET)).isInstanceOf(RuntimeException.class);
-        assertThatThrownBy(() -> planetRepository.save(INVALID_PLANET)).isInstanceOf(RuntimeException.class);
+//        assertThatThrownBy(() -> planetRepository.save(EMPTY_PLANET)).isInstanceOf(RuntimeException.class);
+//        assertThatThrownBy(() -> planetRepository.save(INVALID_PLANET)).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> planetRepository.save(planet)).isInstanceOf(RuntimeException.class);
+    }
+
+    //Parametrized Tests
+    private static Stream<Arguments> providesInvalidPlanets() {
+        return Stream.of(
+                Arguments.of(new Planet(null, "", "")),
+                Arguments.of(new Planet(null, null, "")),
+                Arguments.of(new Planet(null, "", null))
+        );
     }
 
 //    @Test
