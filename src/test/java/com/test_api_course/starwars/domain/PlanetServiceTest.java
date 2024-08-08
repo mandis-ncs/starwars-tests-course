@@ -38,7 +38,7 @@ class PlanetServiceTest {
     void creataPlanet_WithValidData_ReturnsPlanet() {
         when(planetRepository.save(PLANET)).thenReturn(PLANET);
 
-        Planet sut  = planetService.create(PLANET);
+        Planet sut  = planetService.create(PLANET );
 
         assertThat(sut).isEqualTo(PLANET);
     }
